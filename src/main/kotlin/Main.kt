@@ -25,4 +25,7 @@ fun main() {
     post.likes=7
     println(post.id)
     println(post.likes)
+
+    println(post.likes)
+
 }
