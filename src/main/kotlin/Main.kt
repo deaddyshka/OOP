@@ -1,3 +1,6 @@
+data class Answer(val id:Int,val date:Int)
+data class Messege(val id:Int,val date:Int)
+
 data class Post(
     val id: Int,
     val owner_id: Int,
@@ -8,7 +11,9 @@ data class Post(
     val can_pin: Boolean,
     val can_delete: Boolean,
     val can_edit: Boolean,
-    val is_pinned: Boolean
+    val is_pinned: Boolean,
+    val Messege:Messege?=null,
+    val Answer: Answer? =null
 )
 
 
@@ -20,9 +25,7 @@ object WallService {
 
     fun add(post: Post): Post {
         val newPost = post.copy(id = nextId++)
-        posts.add(newPost)
-        return newPost
-        posts += post
+        posts += newPost
         return posts.last()
     }
 
