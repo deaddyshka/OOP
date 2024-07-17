@@ -1,19 +1,29 @@
 import org.junit.Test
 
 import org.junit.Assert.*
+import org.junit.Before
 
 class WallServiceTest {
-
+    @Before
+    fun clearBeforeTest() = WallService.clear()
     @Test
     fun add() {
-        val posts = ArrayList<Post>()
-        var nextId = 1
-        val post = Post(
-            1, 12, 54, 20, "record test test", 5, true, false, true, true
+//        val posts = ArrayList<Post>()
+//        var nextId = 1
+//        val post = Post(
+//            1, 12, 54, 20, "record test test", 5, true, false, true, true
+//        )
+//        WallService.add(post)
+//        val newPost = post.copy(id = nextId++, answer = post.answer?.copy(), messege = post.messege?.copy())
+//        posts += newPost
+//        assertEquals(2, nextId)
+        val initialPost = Post(
+            1, 12, 54, 20, "record test test", 5,
+            true, false, true, true
         )
-        val newPost = post.copy(id = nextId++, answer = post.answer?.copy(), messege = post.messege?.copy())
-        posts += newPost
-        assertEquals(2, nextId)
+        val addPost = WallService.add(initialPost)
+
+        assertEquals(2, addPost.id)
     }
 
     @Test
@@ -50,6 +60,17 @@ class WallServiceTest {
     }
 
     @Test
+    fun NotUpdate() {
+
+        val initialPost = Post(
+            1, 12, 54, 20, "record test test", 5,
+            true, false, true, true
+        )
+        val isUpdated = WallService.update(initialPost)
+
+        assertEquals(isUpdated,false)
+    }
+    @Test
     fun getPosts() {
         val post1 = Post(1, 12, 54, 20, "record test test", 5, true, false, true, true)
         WallService.add(post1)
@@ -59,6 +80,6 @@ class WallServiceTest {
 
         val resultPosts = WallService.getPosts()
 
-        assertEquals(3, resultPosts.size)
+        assertEquals(2, resultPosts.size)
     }
 }

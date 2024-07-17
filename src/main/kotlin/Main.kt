@@ -20,9 +20,13 @@ data class Post(
 object WallService {
 
     //private var posts = emptyArray<Post>()
-    private val posts = ArrayList<Post>()
+    private var posts = ArrayList<Post>()
     private var nextId = 1
 
+    fun clear() {
+        posts = ArrayList<Post>()
+        // также здесь нужно сбросить счетчик для id постов, если он у вас используется
+    }
     fun add(post: Post): Post {
         val newPost = post.copy(id = nextId++, answer = post.answer?.copy(), messege = post.messege?.copy())
         posts += newPost
