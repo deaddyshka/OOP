@@ -1,7 +1,7 @@
-data class answer(val id: Int, val date: Int)
-data class messege(val id: Int, val date: Int)
+data class Answer(val id: Int, val date: Int)
+data class Messege(val id: Int, val date: Int)
 
-data class post(
+data class Post(
     val id: Int,
     val owner_id: Int,
     val from_id: Int,
@@ -12,18 +12,18 @@ data class post(
     val can_delete: Boolean,
     val can_edit: Boolean,
     val is_pinned: Boolean,
-    val messege: answer? = null,
-    val answer: answer? = null
+    val messege: Messege? = null,
+    val answer: Answer? = null
 )
 
 
-object wallService {
+object WallService {
 
     //private var posts = emptyArray<Post>()
-    private val posts = ArrayList<post>()
+    private val posts = ArrayList<Post>()
     private var nextId = 1
 
-    fun add(post: post): post {
+    fun add(post: Post): Post {
         val newPost = post.copy(id = nextId++, answer = post.answer?.copy(), messege = post.messege?.copy())
         posts += newPost
         return posts.last()
@@ -32,62 +32,64 @@ object wallService {
     fun likedById(id: Int) {
         for ((index, post) in posts.withIndex()) {
             if (post.id == id) {
-                posts[index] = post.copy(likes = post.likes + 1,answer = post.answer?.copy(), messege = post.messege?.copy() )
+                posts[index] =
+                    post.copy(likes = post.likes + 1, answer = post.answer?.copy(), messege = post.messege?.copy())
+                println(posts[index].likes)
             }
         }
     }
 
-    fun update(post: post): Boolean {
-        val index = posts.indexOfFirst { it.id == post.id }
+    fun update(newPost: Post): Boolean {
+        val index = posts.indexOfFirst { it.id == newPost.id }
         return if (index != -1) {
-            posts[index] = post.copy()
+            posts[index] = newPost.copy()
             true
         } else {
             false
         }
     }
 
-    fun getPosts(): ArrayList<post> {
+    fun getPosts(): ArrayList<Post> {
         return posts
     }
-
 
 }
 
 fun main() {
     //создали НезмПермеренную post и передали в data Post данные для поста
     //который уже создал запись данных
-    val post = post(
+    val post = Post(
         1, 12, 54, 20, "record test test", 5,
         true, false, true, true
     )
-    wallService.add(post)
+    WallService.add(post)
 
-    val post2 = post(
+    val post2 = Post(
         2, 312, 254, 120, "record2222 test test", 15,
         true, false, true, true
     )
-    wallService.add(post2)
+    WallService.add(post2)
 
     //создали НеизПеременную liked и скопировали в нее "запись данных post" созданную ранее
     //только изменив поле likes добавил +3
-    val liked = post.copy(likes = post.likes + 3)
-    println(liked)
+    // val liked = post.copy(likes = post.likes + 3)
+    WallService.likedById(1) //добавили 1 лайк
 
+    WallService.update(post) //обновили пост 2
 
 // Получение списка постов
-    val posts = wallService.getPosts()
+    val posts = WallService.getPosts()
     println("Wall posts: $posts")
 
 
     // Обновляем пост с id = 1
-    val updatedPost = post(
+    val updatedPost = Post(
         1, 12, 54, 20, "NEW NEW record1 test test", 5,
         true, false, true, true
     )
-    val isUpdated = wallService.update(updatedPost)
+    val isUpdated = WallService.update(updatedPost)
 
 
-    val postsNew = wallService.getPosts()
+    val postsNew = WallService.getPosts()
     println("Wall posts: $postsNew")
 }
