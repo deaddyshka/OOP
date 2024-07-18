@@ -25,6 +25,7 @@ object WallService {
 
     fun clear() {
         posts = ArrayList<Post>()
+        var nextId = 1
         // также здесь нужно сбросить счетчик для id постов, если он у вас используется
     }
     fun add(post: Post): Post {
