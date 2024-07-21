@@ -30,7 +30,8 @@ data class Post(
     val can_edit: Boolean,
     val is_pinned: Boolean,
     val messege: Messege? = null,
-    val answer: Answer? = null
+    val answer: Answer? = null,
+    val attachments: List = listOf()
 )
 
 
