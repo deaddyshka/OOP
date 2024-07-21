@@ -17,9 +17,20 @@ class WallServiceTest {
 //        val newPost = post.copy(id = nextId++, answer = post.answer?.copy(), messege = post.messege?.copy())
 //        posts += newPost
 //        assertEquals(2, nextId)
+        val audio = Audio(1, 2, "Track Title", "Artist", 180)
+        val video = Video(2, 3, "Video Title", "Video Description", 360)
+        val photo = Photo(3, 4, "Photo Title", "link")
+        val document = Document(4, 5, "Document Title", 1024)
+        val link = Link("https://ya.ru", "ya.ru")
         val initialPost = Post(
             10, 12, 54, 20, "record test test", 5,
-            true, false, true, true
+            true, false, true, true, attachments = listOf(
+                AudioAttachment(audio),
+                VideoAttachment(video),
+                PhotoAttachment(photo),
+                DocumentAttachment(document),
+                LinkAttachment(link)
+            )
         )
         val addPost = WallService.add(initialPost)
 
@@ -31,7 +42,20 @@ class WallServiceTest {
        // val posts = ArrayList<Post>() //определили переменную
        // val id = 1 // установили Ид переданного поста для лайка 1
        // val post = Post(1, 12, 54, 20, "record test test", 5, true, false, true, true)
-        val post = Post(1, 12, 54, 20, "record test test", 5, true, false, true, true)
+        val audio = Audio(1, 2, "Track Title", "Artist", 180)
+        val video = Video(2, 3, "Video Title", "Video Description", 360)
+        val photo = Photo(3, 4, "Photo Title", "link")
+        val document = Document(4, 5, "Document Title", 1024)
+        val link = Link("https://ya.ru", "ya.ru")
+        val post = Post(
+            1, 12, 54, 20, "record test test", 5, true, false, true, true, attachments = listOf(
+                AudioAttachment(audio),
+                VideoAttachment(video),
+                PhotoAttachment(photo),
+                DocumentAttachment(document),
+                LinkAttachment(link)
+            )
+        )
         WallService.add(post)
 
 //        for ((index, post) in posts.withIndex()) {
@@ -50,11 +74,31 @@ class WallServiceTest {
 
     @Test
     fun update() {
-
-        val initialPost = Post(1, 12, 54, 20, "record test test", 5, true, false, true, true)
+        val audio = Audio(1, 2, "Track Title", "Artist", 180)
+        val video = Video(2, 3, "Video Title", "Video Description", 360)
+        val photo = Photo(3, 4, "Photo Title", "link")
+        val document = Document(4, 5, "Document Title", 1024)
+        val link = Link("https://ya.ru", "ya.ru")
+        val initialPost = Post(
+            1, 12, 54, 20, "record test test", 5, true, false, true, true, attachments = listOf(
+                AudioAttachment(audio),
+                VideoAttachment(video),
+                PhotoAttachment(photo),
+                DocumentAttachment(document),
+                LinkAttachment(link)
+            )
+        )
         WallService.add(initialPost)
 
-        val updatedPost = Post(1, 12, 54, 20, "NEW NEW record1 test test", 5, true, false, true, true)
+        val updatedPost = Post(
+            1, 12, 54, 20, "NEW NEW record1 test test", 5, true, false, true, true, attachments = listOf(
+                AudioAttachment(audio),
+                VideoAttachment(video),
+                PhotoAttachment(photo),
+                DocumentAttachment(document),
+                LinkAttachment(link)
+            )
+        )
         val result = WallService.update(updatedPost)
 
         assertTrue(result)
@@ -64,10 +108,20 @@ class WallServiceTest {
 
     @Test
     fun NotUpdate() {
-
+        val audio = Audio(1, 2, "Track Title", "Artist", 180)
+        val video = Video(2, 3, "Video Title", "Video Description", 360)
+        val photo = Photo(3, 4, "Photo Title", "link")
+        val document = Document(4, 5, "Document Title", 1024)
+        val link = Link("https://ya.ru", "ya.ru")
         val initialPost = Post(
             1, 12, 54, 20, "record test test", 5,
-            true, false, true, true
+            true, false, true, true, attachments = listOf(
+                AudioAttachment(audio),
+                VideoAttachment(video),
+                PhotoAttachment(photo),
+                DocumentAttachment(document),
+                LinkAttachment(link)
+            )
         )
         val isUpdated = WallService.update(initialPost)
 
@@ -75,10 +129,31 @@ class WallServiceTest {
     }
     @Test
     fun getPosts() {
-        val post1 = Post(1, 12, 54, 20, "record test test", 5, true, false, true, true)
+        val audio = Audio(1, 2, "Track Title", "Artist", 180)
+        val video = Video(2, 3, "Video Title", "Video Description", 360)
+        val photo = Photo(3, 4, "Photo Title", "link")
+        val document = Document(4, 5, "Document Title", 1024)
+        val link = Link("https://ya.ru", "ya.ru")
+        val post1 = Post(
+            1, 12, 54, 20, "record test test", 5, true, false, true, true, attachments = listOf(
+                AudioAttachment(audio),
+                VideoAttachment(video),
+                PhotoAttachment(photo),
+                DocumentAttachment(document),
+                LinkAttachment(link)
+            )
+        )
         WallService.add(post1)
 
-        val post2 = Post(2, 312, 254, 120, "record2222 test test", 15, true, false, true, true)
+        val post2 = Post(
+            2, 312, 254, 120, "record2222 test test", 15, true, false, true, true, attachments = listOf(
+                AudioAttachment(audio),
+                VideoAttachment(video),
+                PhotoAttachment(photo),
+                DocumentAttachment(document),
+                LinkAttachment(link)
+            )
+        )
         WallService.add(post2)
 
         val resultPosts = WallService.getPosts()
