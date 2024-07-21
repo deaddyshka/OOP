@@ -1,6 +1,23 @@
 data class Answer(val id: Int, val date: Int)
 data class Messege(val id: Int, val date: Int)
 
+abstract class Attachment(val type: String)
+
+data class Audio(val id: Int, val owner_id: Int, val title: String, val artist: String, val duration: Int)
+data class AudioAttachment(val audio: Audio) : Attachment("audio")
+
+data class Video(val id: Int, val owner_id: Int, val title: String, val description: String, val duration: Int)
+data class VideoAttachment(val video: Video) : Attachment("video")
+
+data class Photo(val id: Int, val owner_id: Int, val title: String, val link: String)
+data class PhotoAttachment(val photo: Photo) : Attachment("photo")
+
+data class Document(val id: Int, val owner_id: Int, val title: String, val size: Int)
+data class DocumentAttachment(val document: Document) : Attachment("document")
+
+data class Link(val url: String, val title: String)
+data class LinkAttachment(val link: Link) : Attachment("link")
+
 data class Post(
     val id: Int,
     val owner_id: Int,
