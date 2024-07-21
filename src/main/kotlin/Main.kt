@@ -4,9 +4,9 @@ data class Messege(val id: Int, val date: Int)
 data class Post(
     val id: Int,
     val owner_id: Int,
-    val from_id: Int,
+    val from_id: Int?, // поле может принмать значение null
     val date: Int,
-    val text: String,
+    val text: String?,// поле может принмать значение null
     val likes: Int,
     val can_pin: Boolean,
     val can_delete: Boolean,
@@ -19,14 +19,12 @@ data class Post(
 
 object WallService {
 
-    //private var posts = emptyArray<Post>()
     private var posts = ArrayList<Post>()
     private var nextId = 1
 
     fun clear() {
         posts = ArrayList<Post>()
-        nextId = 1
-        // также здесь нужно сбросить счетчик для id постов, если он у вас используется
+        nextId = 1 // Сброс счетчика для id постов
     }
     fun add(post: Post): Post {
         val newPost = post.copy(id = nextId++, answer = post.answer?.copy(), messege = post.messege?.copy())
