@@ -18,29 +18,33 @@ class WallServiceTest {
 //        posts += newPost
 //        assertEquals(2, nextId)
         val initialPost = Post(
-            1, 12, 54, 20, "record test test", 5,
+            10, 12, 54, 20, "record test test", 5,
             true, false, true, true
         )
         val addPost = WallService.add(initialPost)
 
-        assertEquals(2, addPost.id)
+        assertEquals(1, addPost.id)
     }
 
     @Test
     fun likedById() {
-        val posts = ArrayList<Post>() //определили переменную
-        val id = 1 // установили Ид переданного поста для лайка 1
-        val post = Post(
-            1, 12, 54, 20, "record test test", 5, true, false, true, true
-        )
+       // val posts = ArrayList<Post>() //определили переменную
+       // val id = 1 // установили Ид переданного поста для лайка 1
+       // val post = Post(1, 12, 54, 20, "record test test", 5, true, false, true, true)
+        val post = Post(1, 12, 54, 20, "record test test", 5, true, false, true, true)
+        WallService.add(post)
 
-        for ((index, post) in posts.withIndex()) {
-            if (post.id == id) {
-                posts[index] =
-                    post.copy(likes = post.likes + 1, answer = post.answer?.copy(), messege = post.messege?.copy())
-                assertEquals(6, posts[index].likes) //проверяем что количество лайков стало больше
-            }
-        }
+//        for ((index, post) in posts.withIndex()) {
+//            if (post.id == id) {
+//                posts[index] =
+//                    post.copy(likes = post.likes + 1, answer = post.answer?.copy(), messege = post.messege?.copy())
+//                assertEquals(6, posts[index].likes) //проверяем что количество лайков стало больше
+//            }
+//        }
+        WallService.likedById(1)
+        val updatedPost = WallService.getPosts().first { it.id == 1 }
+
+        assertEquals(6, updatedPost.likes)
 
     }
 
@@ -51,7 +55,6 @@ class WallServiceTest {
         WallService.add(initialPost)
 
         val updatedPost = Post(1, 12, 54, 20, "NEW NEW record1 test test", 5, true, false, true, true)
-
         val result = WallService.update(updatedPost)
 
         assertTrue(result)
