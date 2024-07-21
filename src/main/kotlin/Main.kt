@@ -81,7 +81,7 @@ fun main() {
     val video = Video(2, 3, "Video Title", "Video Description", 360)
     val photo = Photo(3, 4, "Photo Title", "link")
     val document = Document(4, 5, "Document Title", 1024)
-    val link = Link("https://example.com", "Example")
+    val link = Link("https://ya.ru", "ya.ru")
 
     //создали неизменяемую переменную post и передали в data Post данные для поста
     //который уже создал запись данных
