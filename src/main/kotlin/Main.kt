@@ -21,9 +21,9 @@ data class LinkAttachment(val link: Link) : Attachment("link")
 data class Post(
     val id: Int,
     val owner_id: Int,
-    val from_id: Int?, // поле может принмать значение null
+    val from_id: Int?, // поле может принимать значение null
     val date: Int,
-    val text: String?,// поле может принмать значение null
+    val text: String?, // поле может принимать значение null
     val likes: Int,
     val can_pin: Boolean,
     val can_delete: Boolean,
@@ -31,9 +31,8 @@ data class Post(
     val is_pinned: Boolean,
     val messege: Messege? = null,
     val answer: Answer? = null,
-    val attachments: List = listOf()
+    val attachments: List<Attachment> // Добавлен массив вложений с типом
 )
-
 
 object WallService {
 
@@ -44,6 +43,7 @@ object WallService {
         posts = ArrayList<Post>()
         nextId = 1 // Сброс счетчика для id постов
     }
+
     fun add(post: Post): Post {
         val newPost = post.copy(id = nextId++, answer = post.answer?.copy(), messege = post.messege?.copy())
         posts += newPost
@@ -77,39 +77,56 @@ object WallService {
 }
 
 fun main() {
-    //создали НезмПермеренную post и передали в data Post данные для поста
+    val audio = Audio(1, 2, "Track Title", "Artist", 180)
+    val video = Video(2, 3, "Video Title", "Video Description", 360)
+    val photo = Photo(3, 4, "Photo Title", "link")
+    val document = Document(4, 5, "Document Title", 1024)
+    val link = Link("https://example.com", "Example")
+
+    //создали неизменяемую переменную post и передали в data Post данные для поста
     //который уже создал запись данных
     val post = Post(
         1, 12, 54, 20, "record test test", 5,
-        true, false, true, true
+        true, false, true, true,
+        attachments = listOf(
+            AudioAttachment(audio),
+            VideoAttachment(video),
+            PhotoAttachment(photo),
+            DocumentAttachment(document),
+            LinkAttachment(link)
+        )
     )
     WallService.add(post)
 
     val post2 = Post(
         2, 312, 254, 120, "record2222 test test", 15,
-        true, false, true, true
+        true, false, true, true,
+        attachments = listOf(
+            AudioAttachment(audio),
+            VideoAttachment(video)
+        )
     )
     WallService.add(post2)
 
-    //создали НеизПеременную liked и скопировали в нее "запись данных post" созданную ранее
+    //создали неизменяемую переменную liked и скопировали в нее "запись данных post" созданную ранее
     //только изменив поле likes добавил +3
-    // val liked = post.copy(likes = post.likes + 3)
     WallService.likedById(1) //добавили 1 лайк
 
     WallService.update(post) //обновили пост 2
 
-// Получение списка постов
+    // Получение списка постов
     val posts = WallService.getPosts()
     println("Wall posts: $posts")
-
 
     // Обновляем пост с id = 1
     val updatedPost = Post(
         1, 12, 54, 20, "NEW NEW record1 test test", 5,
-        true, false, true, true
+        true, false, true, true,
+        attachments = listOf(
+            AudioAttachment(audio)
+        )
     )
     val isUpdated = WallService.update(updatedPost)
-
 
     val postsNew = WallService.getPosts()
     println("Wall posts: $postsNew")
